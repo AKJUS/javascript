@@ -81,7 +81,7 @@
     "@clerk/clerk-react": "workspace:^",
     "@clerk/shared": "workspace:^",
     "@clerk/types": "workspace:^",
-    "cookie": "1.0.2",
+    "cookie": "1.0.0",
     "tslib": "catalog:repo"
   },
   "devDependencies": {
