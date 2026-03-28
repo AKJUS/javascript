@@ -112,7 +112,7 @@
     "@types/webpack-env": "^1.18.8",
     "bundlewatch": "^0.4.1",
     "jsdom": "26.1.0",
-    "minimatch": "^10.0.3",
+    "minimatch": "^10.2.3",
     "webpack-merge": "^5.10.0"
   },
   "engines": {
