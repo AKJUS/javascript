@@ -4,7 +4,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.0.0",
     "@clerk/themes": "^2.0.0",
-    "next": "^14.0.0",
+    "next": "^16.2.9",
     "react": "^18.0.0"
   },
   "engines": {
