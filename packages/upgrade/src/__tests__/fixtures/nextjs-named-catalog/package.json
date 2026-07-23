@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@clerk/nextjs": "catalog:clerk",
-    "next": "^14.0.0",
+    "next": "^16.2.10",
     "react": "catalog:peer-react"
   }
 }
