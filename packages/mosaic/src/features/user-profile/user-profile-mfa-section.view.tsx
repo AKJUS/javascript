@@ -1,8 +1,8 @@
 import { type ReactNode, type Ref, useMemo, useRef, useState } from 'react';
 
 import { Confirmation } from '../../blocks/confirmation';
-import { Text } from '../../components/text';
-import { useListRemovalFocus } from '../../hooks/useListRemovalFocus';
+import { Section } from '../../components/section';
+import { useListRemovalFocus } from '../../hooks/use-list-removal-focus';
 import { fill, type MosaicMessages, useMessages } from '../../localization';
 import { UserProfileAddMfaDialog } from './user-profile-add-mfa.dialog';
 import { UserProfileAddMfaView } from './user-profile-add-mfa.view';
@@ -26,7 +26,6 @@ export interface UserProfileMfaSectionViewProps {
   addableMethods?: readonly UserProfileMfaAddableMethod[];
   addButtonRef?: Ref<HTMLButtonElement>;
   addControl?: ReactNode;
-  sectionTitle?: string;
   onAdd?: (type: UserProfileMfaAddableMethod) => void;
   onRegenerateBackupCodes?: () => void;
   onRemove?: (id: string) => void | Promise<void>;
@@ -38,14 +37,13 @@ export function UserProfileMfaSectionView({
   addableMethods,
   addButtonRef,
   addControl,
-  sectionTitle,
   onAdd,
   onRegenerateBackupCodes,
   onRemove,
   onSetDefault,
 }: UserProfileMfaSectionViewProps) {
   const m = useMessages('userProfileMfa');
-  const section = useRef<HTMLElement>(null);
+  const section = useRef<HTMLDivElement>(null);
   const removalFocus = useListRemovalFocus({
     ids: methods.map(method => method.id),
     onRemove,
@@ -107,7 +105,6 @@ export function UserProfileMfaSectionView({
         emptyLabel={m.empty}
         hasItems={methods.length > 0}
         label={m.label}
-        sectionTitle={sectionTitle}
       >
         {methods.map(method => (
           <UserProfileMfaRowView
@@ -120,14 +117,7 @@ export function UserProfileMfaSectionView({
           />
         ))}
       </UserProfileSecurityList>
-      {defaultError ? (
-        <Text
-          role='alert'
-          color='negative'
-        >
-          {defaultError}
-        </Text>
-      ) : null}
+      <Section.Error>{defaultError}</Section.Error>
       {onRemove ? (
         <Confirmation
           handle={removeMethod}

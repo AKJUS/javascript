@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { deferred } from '../../../machines/__tests__/test-utils';
-import { MosaicProvider } from '../../../MosaicProvider';
+import { deferred } from '../../../__tests__/async';
+import { MosaicProvider } from '../../../mosaic-provider';
 import type { UserProfileMfaMethod, UserProfileMfaSectionViewProps } from '../user-profile-mfa-section.view';
 import { UserProfileMfaSectionView } from '../user-profile-mfa-section.view';
 
@@ -42,7 +42,6 @@ describe('MFA section', () => {
           <MosaicProvider>
             <UserProfileMfaSectionView
               methods={methods}
-              sectionTitle='Authentication'
               addableMethods={['sms', 'authenticator']}
               onAdd={add === 'picker' ? () => {} : undefined}
               addControl={add === 'custom' ? <button type='button'>Add custom method</button> : undefined}
@@ -61,7 +60,7 @@ describe('MFA section', () => {
       await user.click(within(screen.getByRole('alertdialog')).getByRole('button', { name: 'Remove' }));
       const fallback =
         add === 'none'
-          ? screen.getByRole('region', { name: 'Authentication' })
+          ? screen.getByRole('group', { name: '2-step verification' })
           : screen.getByRole('button', { name: add === 'picker' ? 'Add verification method' : 'Add custom method' });
       await waitFor(() => expect(fallback).toHaveFocus());
     },

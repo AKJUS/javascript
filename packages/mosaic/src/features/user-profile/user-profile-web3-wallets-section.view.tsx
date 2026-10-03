@@ -2,9 +2,9 @@ import { useMemo, useRef } from 'react';
 
 import { Confirmation } from '../../blocks/confirmation';
 import { Section } from '../../components/section';
-import { useListRemovalFocus } from '../../hooks/useListRemovalFocus';
+import { useListRemovalFocus } from '../../hooks/use-list-removal-focus';
 import { fill, useMessages } from '../../localization';
-import { truncateWithEndVisible } from '../../utils/truncateTextWithEndVisible';
+import { truncateWithEndVisible } from '../../utils/truncate-text-with-end-visible';
 import { UserProfileWeb3WalletRowView } from './user-profile-web3-wallet-row.view';
 
 export interface UserProfileWeb3Provider {
@@ -43,7 +43,7 @@ export function UserProfileWeb3WalletsSectionView({
   onRemove,
 }: UserProfileWeb3WalletsSectionViewProps) {
   const m = useMessages('userProfileWeb3Wallets');
-  const section = useRef<HTMLElement>(null);
+  const section = useRef<HTMLDivElement>(null);
   const removalFocus = useListRemovalFocus({
     ids: wallets.map(wallet => wallet.id),
     onRemove,
@@ -59,30 +59,34 @@ export function UserProfileWeb3WalletsSectionView({
   return (
     <>
       {hasRows ? (
-        <Section.Root
-          ref={section}
-          tabIndex={-1}
-        >
-          <Section.Title>{m.title}</Section.Title>
-          <Section.Group>
-            {wallets.map(wallet => (
-              <UserProfileWeb3WalletRowView
-                key={wallet.id}
-                wallet={wallet}
-                triggerRef={removalFocus.registerTrigger(wallet.id)}
-                onSetPrimary={onSetPrimary}
-                onRemove={onRemove ? wallet => removeWallet.open(wallet) : undefined}
-              />
-            ))}
-            {onConnect
-              ? availableProviders.map(provider => (
-                  <UserProfileWeb3WalletRowView
-                    key={provider.id}
-                    wallet={provider}
-                    onConnect={onConnect}
-                  />
-                ))
-              : null}
+        <Section.Root>
+          <Section.Group
+            ref={section}
+            tabIndex={-1}
+          >
+            <Section.Header>
+              <Section.Title>{m.title}</Section.Title>
+            </Section.Header>
+            <Section.Body>
+              {wallets.map(wallet => (
+                <UserProfileWeb3WalletRowView
+                  key={wallet.id}
+                  wallet={wallet}
+                  triggerRef={removalFocus.registerTrigger(wallet.id)}
+                  onSetPrimary={onSetPrimary}
+                  onRemove={onRemove ? wallet => removeWallet.open(wallet) : undefined}
+                />
+              ))}
+              {onConnect
+                ? availableProviders.map(provider => (
+                    <UserProfileWeb3WalletRowView
+                      key={provider.id}
+                      wallet={provider}
+                      onConnect={onConnect}
+                    />
+                  ))
+                : null}
+            </Section.Body>
           </Section.Group>
         </Section.Root>
       ) : null}
